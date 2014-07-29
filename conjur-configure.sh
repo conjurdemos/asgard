@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# creates Conjur config files based on environment variables
+
 ARGS="APPLIANCE_URL CERT ACCOUNT LOGIN PASSWORD"
 
 for a in $ARGS; do
@@ -27,5 +29,3 @@ password $CONJUR_PASSWORD
 EOF
 
 chmod 0600 /etc/conjur.identity
-
-bash
