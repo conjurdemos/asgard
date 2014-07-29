@@ -1,0 +1,14 @@
+grails {
+  awsAccounts=['<%=conjurenv['account_id']%>']
+  awsAccountNames=['<%=conjurenv['account_id']%>':'prod']
+}
+
+secret {
+  accessId='<%=conjurenv['key_id']%>'
+  secretKey='<%=conjurenv['secret_key']%>'
+}
+
+cloud {
+  accountName='prod'
+  publicResourceAccounts=['amazon']
+}
