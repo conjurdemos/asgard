@@ -11,4 +11,4 @@ COPY asgard-run.sh /usr/sbin/launch-asgard
 COPY asgard.env.yaml /etc/asgard/
 COPY asgard.conf.erb /etc/asgard/
 
-CMD /usr/sbin/launch-asgard
+CMD ["/usr/sbin/launch-asgard"]
