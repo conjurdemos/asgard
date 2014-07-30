@@ -1,4 +1,4 @@
-policy 'asgard-demo-0.0.2' do
+policy 'asgard-demo-0.0.4' do
   variables = []
 
   group 'asgard-managers', name: 'Credential managers for Asgard' do
@@ -13,11 +13,11 @@ policy 'asgard-demo-0.0.2' do
     end
   end
 
+  users = group "asgard-users", name: "Users of Asgard"
+
   asgard = layer 'asgard', name: "production Asgard hosts" do
     variables.each { |var| can 'execute', var }
+    add_member "use_host", users
   end
 
-  group "asgard-users", name: "Users of Asgard" do
-    can "execute", asgard
-  end
 end
