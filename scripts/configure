@@ -40,6 +40,16 @@ EOF
 chmod 0600 /etc/conjur.identity
 
 
+# Configure nginx gate
+
+CONJUR_HOST=$(echo $CONJUR_APPLIANCE_URL | cut -d/ -f3)
+sed "
+  s@<conjur-host>@$CONJUR_HOST@;
+  s@<conjur-account>@$CONJUR_ACCOUNT@;
+  s@<conjur-login>@$CONJUR_LOGIN@;
+" < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+
+
 # Add verisign cert (used by AWS) to Java truststore
 
 keytool -keystore /usr/lib/jvm/java-1.7-openjdk/jre/lib/security/cacerts \

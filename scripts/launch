@@ -20,6 +20,10 @@ CNF=`conjur env template -c /etc/asgard/asgard.env.yaml /etc/asgard/asgard.conf.
 ln -sf $CNF $ASGARD_HOME/Config.groovy
 echo Asgard configuration loaded from Conjur.
 
+echo Launching nginx...
+mkdir -p /tmp/nginx
+nginx
+
 CMD="java -Xmx1024M -XX:MaxPermSize=128m -jar /opt/asgard/asgard-standalone.jar"
 
 if [ -t 1 ]; then
@@ -29,5 +33,6 @@ if [ -t 1 ]; then
   echo
   sh
 else
+  echo Launching asgard...
   $CMD
 fi

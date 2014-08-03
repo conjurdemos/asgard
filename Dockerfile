@@ -3,6 +3,9 @@ MAINTAINER Rafal Rzepecki <rafal@conjur.net>
 
 COPY etc-asgard /etc/asgard
 
-COPY scripts /etc/scripts
+EXPOSE 80
 
 CMD ["/etc/scripts/launch"]
+
+COPY scripts /etc/scripts
+COPY etc-nginx /etc/nginx
