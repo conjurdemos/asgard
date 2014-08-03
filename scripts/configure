@@ -1,7 +1,11 @@
-#!/bin/sh
+#!/bin/sh -e
 #
 # Configure the docker container
 #
+
+if ! [ -z "$DEBUG" ]; then
+  set -x
+fi
 
 
 # Check if all expected variables are set
@@ -34,3 +38,10 @@ cat > /etc/conjur.identity << EOF
 EOF
 
 chmod 0600 /etc/conjur.identity
+
+
+# Add verisign cert (used by AWS) to Java truststore
+
+keytool -keystore /usr/lib/jvm/java-1.7-openjdk/jre/lib/security/cacerts \
+  -storepass changeit -importcert -noprompt \
+  -alias verisign-g5 -file /etc/asgard/verisign-g5.crt
