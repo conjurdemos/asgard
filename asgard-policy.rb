@@ -20,4 +20,8 @@ policy 'asgard-demo-0.0.4' do
     add_member "use_host", users
   end
 
+  eureka = layer 'eureka', name: "Eureka servers" do
+    add_member "use_host", asgard
+  end
+
 end
