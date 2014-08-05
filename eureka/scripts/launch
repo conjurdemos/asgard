@@ -1,0 +1,30 @@
+#!/bin/sh -e
+#
+# Configure and launch the docker container
+#
+
+if ! [ -z "$DEBUG" ]; then
+  set -x
+fi
+
+if ! [ -e /etc/conjur.conf ]; then
+  /etc/scripts/configure
+  echo Container configured.
+fi
+
+echo Launching nginx...
+mkdir -p /tmp/nginx
+nginx
+
+CMD="/opt/apache-tomcat/bin/catalina.sh run"
+
+if [ -t 1 ]; then
+  echo
+  echo TTY detected. Dropping to shell for development instead of launching.
+  echo Would execute: $CMD
+  echo
+  sh
+else
+  echo Launching eureka...
+  $CMD
+fi

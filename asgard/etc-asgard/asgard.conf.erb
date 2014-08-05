@@ -1,3 +1,11 @@
+import com.netflix.asgard.Region
+
+eureka {
+  regionsToServers = [
+    (Region.US_EAST_1): '127.0.0.2'
+  ]
+}
+
 grails {
   awsAccounts=['<%=conjurenv['account_id']%>']
   awsAccountNames=['<%=conjurenv['account_id']%>':'prod']

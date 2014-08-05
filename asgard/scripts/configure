@@ -22,6 +22,7 @@ done
 
 # Create Conjur config files
 
+# TODO: make sure nginx verifies the cert
 echo "$CONJUR_CERT" > /etc/conjur.pem
 
 cat > /etc/conjur.conf << EOF
@@ -47,6 +48,8 @@ sed "
   s@<conjur-host>@$CONJUR_HOST@;
   s@<conjur-account>@$CONJUR_ACCOUNT@;
   s@<conjur-login>@$CONJUR_LOGIN@;
+  s@<conjur-key>@$CONJUR_PASSWORD@;
+  s@<conjur-login-quoted>@$(echo $CONJUR_LOGIN | sed s@/@%2F@)@;
 " < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
 

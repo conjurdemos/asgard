@@ -1,0 +1,34 @@
+#!/bin/sh -e
+#
+# Configure the docker container
+#
+
+if ! [ -z "$DEBUG" ]; then
+  set -x
+fi
+
+
+# Check if all expected variables are set
+
+ARGS="APPLIANCE_URL CERT ACCOUNT LOGIN"
+for a in $ARGS; do
+  VAR=CONJUR_$a
+  if eval [ -z \"\$$VAR\" ]; then
+    echo "$VAR environment variable required but not set."
+    exit 1
+  fi
+done
+
+
+# TODO: make sure nginx verifies the cert
+echo "$CONJUR_CERT" > /etc/conjur.pem
+
+
+# Configure nginx gate
+
+CONJUR_HOST=$(echo $CONJUR_APPLIANCE_URL | cut -d/ -f3)
+sed "
+  s@<conjur-host>@$CONJUR_HOST@;
+  s@<conjur-account>@$CONJUR_ACCOUNT@;
+  s@<conjur-login>@$CONJUR_LOGIN@;
+" < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
