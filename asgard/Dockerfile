@@ -1,11 +1,16 @@
-FROM divide/asgard-conjur:base
+FROM uggedal/alpine
 MAINTAINER Rafal Rzepecki <rafal@conjur.net>
 
+RUN apk update
+RUN apk add openjdk7-jre-base ruby nginx-lua ruby-json ruby-bigdecimal
+RUN gem install -N conjur-cli
+
+ADD https://netflixoss.ci.cloudbees.com/job/asgard-master/lastStableBuild/artifact/asgard-standalone.jar /opt/asgard/asgard-standalone.jar
+
 COPY etc-asgard /etc/asgard
+COPY scripts /etc/scripts
+COPY etc-nginx /etc/nginx
 
 EXPOSE 80
 
 CMD ["/etc/scripts/launch"]
-
-COPY scripts /etc/scripts
-COPY etc-nginx /etc/nginx
