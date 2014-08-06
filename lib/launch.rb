@@ -10,23 +10,28 @@ Launch = Struct.new(:service, :options) do
     appliance_url = Conjur.configuration.appliance_url or raise "No appliance_url in Conjur config"
     cert = Conjur::Config['cert_file'] or raise "No cert_file in Conjur config"
     cert = File.read(cert)
-      
+
     env = {
       'CONJUR_APPLIANCE_URL' => Conjur.configuration.appliance_url,
       'CONJUR_ACCOUNT' => Conjur.configuration.account,
       'CONJUR_CERT' => cert,
-      'CONJUR_AUTHN_LOGIN' => "host/#{host_id.split(':')[1]}",
+      'CONJUR_AUTHN_LOGIN' => "host/#{host_id.split(':')[-1]}",
       'CONJUR_AUTHN_API_KEY' => host_api_key,
       'CONJUR_POLICY' => policy['policy'],
     }
+    
     env_args = env.keys.map{|k| "-e #{k}"}.join(' ')
       
-    args = [
-      "docker run #{env_args} --name #{service} --rm divide/asgard-conjur:#{service}"
-    ]
-    
-    puts args
+    arg = if service == "asgard"
+      "docker run #{env_args} --name asgard --link eureka:eureka --rm divide/asgard-conjur"
+    elsif service == "eureka"
+      "docker run #{env_args} --name eureka --rm divide/asgard-conjur:eureka"
+    else
+      raise "Unrecognized service '#{service}'"
+    end
+      
+    puts arg
 
-    Kernel.system(env, *args) or exit($?.to_i) # keep original exit code in case of failure
+    Kernel.system(env, arg) or exit($?.to_i) # keep original exit code in case of failure
   end
 end

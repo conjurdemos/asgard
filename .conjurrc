@@ -1,0 +1,6 @@
+---
+account: demo
+plugins:
+- proxy
+appliance_url: https://ec2-54-83-34-173.compute-1.amazonaws.com/api
+cert_file: ~/accounts/demo/conjur-demo.pem
