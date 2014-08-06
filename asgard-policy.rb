@@ -18,10 +18,14 @@ policy 'asgard-demo-0.0.4' do
   asgard = layer 'asgard', name: "production Asgard hosts" do
     variables.each { |var| can 'execute', var }
     add_member "use_host", users
+
+    add_host host("docker/asgard")
   end
 
   eureka = layer 'eureka', name: "Eureka servers" do
     add_member "use_host", asgard
+
+    add_host host("docker/eureka")
   end
 
 end
