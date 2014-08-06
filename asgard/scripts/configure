@@ -10,7 +10,7 @@ fi
 
 # Check if all expected variables are set
 
-ARGS="APPLIANCE_URL CERT ACCOUNT LOGIN PASSWORD"
+ARGS="APPLIANCE_URL CERT ACCOUNT LOGIN PASSWORD POLICY"
 for a in $ARGS; do
   VAR=CONJUR_$a
   if eval [ -z \"\$$VAR\" ]; then
@@ -52,6 +52,9 @@ sed "
   s@<conjur-login-quoted>@$(echo $CONJUR_LOGIN | sed s@/@%2F@)@;
 " < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
+sed -i -e "
+  s@<conjur-policy>@$CONJUR_POLICY@;
+" /etc/asgard/asgard.env.yaml
 
 # Add verisign cert (used by AWS) to Java truststore
 
