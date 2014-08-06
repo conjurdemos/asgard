@@ -21,7 +21,7 @@ Launch = Struct.new(:service, :options) do
     env_args = env.keys.map{|k| "-e #{k}"}.join(' ')
       
     args = [
-      "docker run #{env_args} --name eureka --rm divide/asgard-conjur:eureka"
+      "docker run #{env_args} --name #{service} --rm divide/asgard-conjur:#{service}"
     ]
     
     puts args
