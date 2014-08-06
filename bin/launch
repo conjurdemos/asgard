@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '../lib')
+
+require 'optparse'
+require 'methadone'
+require 'launch.rb'
+
+class App
+  include Methadone::Main
+  include Methadone::CLILogging
+
+  main do |service|
+	Launch.new(service, options).run
+  end
+
+  description "Launch an Asgard demo service"
+  
+  arg :service, "Name of the service to launch [asgard, eureka]"
+
+  # description "one line description of your app"
+  #
+  # Accept flags via:
+  # on("--flag VAL","Some flag")
+  # options[flag] will contain VAL
+  #
+  # Specify switches via:
+  # on("--[no-]switch","Some switch")
+  #
+  # Or, just call OptionParser methods on opts
+  #
+  # Require an argument
+  # arg :some_arg 
+  #
+  # # Make an argument optional
+  # arg :optional_arg, :optional
+
+  version "0.1.0"
+
+  use_log_level_option
+
+  go!
+end

@@ -10,7 +10,7 @@ fi
 
 # Check if all expected variables are set
 
-ARGS="APPLIANCE_URL CERT ACCOUNT LOGIN PASSWORD"
+ARGS="APPLIANCE_URL CERT ACCOUNT AUTHN_LOGIN AUTHN_PASSWORD"
 for a in $ARGS; do
   VAR=CONJUR_$a
   if eval [ -z \"\$$VAR\" ]; then
@@ -34,8 +34,8 @@ EOF
 
 cat > /etc/conjur.identity << EOF
   machine $CONJUR_APPLIANCE_URL/authn
-  login $CONJUR_LOGIN
-  password $CONJUR_PASSWORD
+  login $CONJUR_AUTHN_LOGIN
+  password $CONJUR_AUTHN_PASSWORD
 EOF
 
 chmod 0600 /etc/conjur.identity
@@ -47,9 +47,9 @@ CONJUR_HOST=$(echo $CONJUR_APPLIANCE_URL | cut -d/ -f3)
 sed "
   s@<conjur-host>@$CONJUR_HOST@;
   s@<conjur-account>@$CONJUR_ACCOUNT@;
-  s@<conjur-login>@$CONJUR_LOGIN@;
-  s@<conjur-key>@$CONJUR_PASSWORD@;
-  s@<conjur-login-quoted>@$(echo $CONJUR_LOGIN | sed s@/@%2F@)@;
+  s@<conjur-login>@$CONJUR_AUTHN_LOGIN@;
+  s@<conjur-key>@$CONJUR_AUTHN_PASSWORD@;
+  s@<conjur-login-quoted>@$(echo $CONJUR_AUTHN_LOGIN | sed s@/@%2F@)@;
 " < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
 
