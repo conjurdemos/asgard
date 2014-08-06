@@ -24,7 +24,7 @@ Launch = Struct.new(:service, :options) do
     env_args = env.keys.map{|k| "-e #{k}"}.join(' ')
       
     arg = if service == "asgard"
-      "docker run #{env_args} --name asgard --link eureka:eureka --rm divide/asgard-conjur"
+      "docker run #{env_args} --name asgard --link eureka:eureka -p #{options[:port] || '8080'}:80 --rm divide/asgard-conjur"
     elsif service == "eureka"
       "docker run #{env_args} --name eureka --rm divide/asgard-conjur:eureka"
     else
