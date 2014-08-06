@@ -19,6 +19,7 @@ Launch = Struct.new(:service, :options) do
       'CONJUR_AUTHN_API_KEY' => host_api_key,
       'CONJUR_POLICY' => policy['policy'],
     }
+    env['DEBUG'] = 'true' if options[:debug]
     
     env_args = env.keys.map{|k| "-e #{k}"}.join(' ')
       
