@@ -19,6 +19,8 @@ class App
   arg :service, "Name of the service to launch [asgard, eureka]"
 
   on("--debug", "Debug logging of container launch")
+  
+  on("--port PORT", "Local port on which Asgard will be available")
 
   # description "one line description of your app"
   #
