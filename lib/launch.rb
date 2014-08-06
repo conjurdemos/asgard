@@ -15,8 +15,8 @@ Launch = Struct.new(:service, :options) do
       'CONJUR_APPLIANCE_URL' => Conjur.configuration.appliance_url,
       'CONJUR_ACCOUNT' => Conjur.configuration.account,
       'CONJUR_CERT' => cert,
-      'CONJUR_LOGIN' => "host/#{host_id.split(':')[1]}",
-      'CONJUR_PASSWORD' => host_api_key
+      'CONJUR_AUTHN_LOGIN' => "host/#{host_id.split(':')[1]}",
+      'CONJUR_AUTHN_API_KEY' => host_api_key
     }
     env_args = env.keys.map{|k| "-e #{k}"}.join(' ')
       
