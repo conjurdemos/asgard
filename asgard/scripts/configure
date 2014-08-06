@@ -45,15 +45,15 @@ chmod 0600 /etc/conjur.identity
 
 CONJUR_HOST=$(echo $CONJUR_APPLIANCE_URL | cut -d/ -f3)
 sed "
-  s@<conjur-host>@$CONJUR_HOST@;
-  s@<conjur-account>@$CONJUR_ACCOUNT@;
-  s@<conjur-login>@$CONJUR_AUTHN_LOGIN@;
-  s@<conjur-key>@$CONJUR_AUTHN_API_KEY@;
-  s@<conjur-login-quoted>@$(echo $CONJUR_AUTHN_LOGIN | sed s@/@%2F@)@;
+  s^<conjur-host>^$CONJUR_HOST^;
+  s^<conjur-account>^$CONJUR_ACCOUNT^;
+  s^<conjur-login>^$CONJUR_AUTHN_LOGIN^;
+  s^<conjur-key>^$CONJUR_AUTHN_API_KEY^;
+  s^<conjur-login-quoted>^$(echo $CONJUR_AUTHN_LOGIN | sed s^/^%2F^g)^;
 " < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
 sed -i -e "
-  s@<conjur-policy>@$CONJUR_POLICY@;
+  s^<conjur-policy>^$CONJUR_POLICY^;
 " /etc/asgard/asgard.env.yaml
 
 # Add verisign cert (used by AWS) to Java truststore
