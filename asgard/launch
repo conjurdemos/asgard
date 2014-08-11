@@ -7,10 +7,9 @@ if ! [ -z "$DEBUG" ]; then
   set -x
 fi
 
-if ! [ -e /etc/conjur.conf ]; then
-  /etc/scripts/configure
-  echo Container configured.
-fi
+keytool -keystore /usr/lib/jvm/java-1.7-openjdk/jre/lib/security/cacerts \
+  -storepass changeit -importcert -noprompt \
+  -alias verisign-g5 -file /etc/asgard/verisign-g5.crt
 
 export ASGARD_HOME=/var/lib/asgard
 mkdir -p $ASGARD_HOME
@@ -19,10 +18,6 @@ CNF=`conjur env template -c /etc/asgard/asgard.env.yaml /etc/asgard/asgard.conf.
 # NOTE: this will wipe out any existing Asgard config.
 ln -sf $CNF $ASGARD_HOME/Config.groovy
 echo Asgard configuration loaded from Conjur.
-
-echo Launching nginx...
-mkdir -p /tmp/nginx
-nginx
 
 CMD="java -Xmx1024M -XX:MaxPermSize=128m -jar /opt/asgard/asgard-standalone.jar"
 

@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+/opt/apache-tomcat/bin/catalina.sh run

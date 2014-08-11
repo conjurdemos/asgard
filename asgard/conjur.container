@@ -1,0 +1,5 @@
+gate 80, to: 8080
+proxy '127.0.0.2:80', to: 'eureka'
+
+apply_policy '/etc/asgard/asgard.env.yaml'
+configure_conjur
