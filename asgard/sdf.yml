@@ -1,0 +1,14 @@
+global:
+  conjur:
+    hostname: conjur
+
+gatekeeper:
+  port: 80
+  service: asgard:80
+  conjur_account:  demo
+  conjur_resource: webservice/production/asgard
+
+forward:
+  eureka:
+    listen: 127.0.0.2
+    service: eureka:80

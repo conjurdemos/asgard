@@ -14,10 +14,11 @@ keytool -keystore /usr/lib/jvm/java-1.7-openjdk/jre/lib/security/cacerts \
 export ASGARD_HOME=/var/lib/asgard
 mkdir -p $ASGARD_HOME
 
-CNF=`conjur env template -c /etc/asgard/asgard.env.yaml /etc/asgard/asgard.conf.erb`
+#CNF=`conjur env template -c /etc/asgard/asgard.env.yaml /etc/asgard/asgard.conf.erb`
 # NOTE: this will wipe out any existing Asgard config.
 ln -sf $CNF $ASGARD_HOME/Config.groovy
-echo Asgard configuration loaded from Conjur.
+#echo Asgard configuration loaded from Conjur.
+echo TODO: Secrets from Conjur
 
 CMD="java -Xmx1024M -XX:MaxPermSize=128m -jar /opt/asgard/asgard-standalone.jar"
 

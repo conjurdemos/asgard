@@ -1,0 +1,11 @@
+global:
+  conjur:
+    certificate_path: /etc/conjur.pem
+    hostname: conjur
+
+gatekeeper:
+  port: 80
+  service: localhost:8080
+  conjur_account:  demo
+  conjur_resource: webservice/production/eureka
+  
