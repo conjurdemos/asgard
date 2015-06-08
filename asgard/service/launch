@@ -7,6 +7,10 @@ if ! [ -z "$DEBUG" ]; then
   set -x
 fi
 
+echo Starting nginx...
+mkdir -p /tmp/nginx
+nginx
+
 keytool -keystore /usr/lib/jvm/java-1.7-openjdk/jre/lib/security/cacerts \
   -storepass changeit -importcert -noprompt \
   -alias verisign-g5 -file /etc/asgard/verisign-g5.crt
